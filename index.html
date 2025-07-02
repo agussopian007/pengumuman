@@ -163,10 +163,12 @@
 
       if (siswa.status === "LULUS") {
         hasil.classList.add("success");
-       hasil.innerHTML = `
-        ✅ <strong>Selamat!</strong><br />
-        <span style="font-size: 1.5rem; display: block; margin: 0.5rem 0;">${siswa.nama}</span>
-        <span>Kamu <strong>Lolos seleksi</strong>.</span>`;
+      hasil.innerHTML = `
+  ✅ <strong>Selamat!</strong><br />
+  <div style="margin: 0.3rem 0 0.2rem; font-size: 1.2rem;">${siswa.nama}</div>
+  <div style="margin: 0; font-size: 1rem;">Kamu <strong>Lolos seleksi</strong>.</div>
+`;
+
 
         info.style.display = "block";
         info.innerHTML = `
