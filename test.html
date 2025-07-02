@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pengumuman Kelulusan - SMP Negeri 2 Cibiuk</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 30px;
+      background-color: #f0f4f8;
+    }
+
+    h1 {
+      color: #0a3d62;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      width: 250px;
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-left: 10px;
+      cursor: pointer;
+      background-color: #0a3d62;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+
+    #result {
+      margin-top: 30px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .lolos {
+      color: green;
+    }
+
+    .tidak-lolos {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Pengumuman Hasil Seleksi</h1>
+  <h2>Sistem Penerimaan Murid Baru</h2>
+  <h3>Tahun Pelajaran 2025/2026</h3>
+  <p>SMP Negeri 2 Cibiuk</p>
+
+  <p>Masukkan NIK untuk melihat hasil seleksi:</p>
+  <input type="text" id="nikInput" placeholder="Masukkan NIK Anda">
+  <button onclick="cekKelulusan()">Cek</button>
+
+  <div id="result"></div>
+
+  <script>
+    // Daftar NIK yang lolos seleksi
+    const dataLulus = [
+      "3210123456780001",
+      "3210123456780002",
+      "3210123456780003"
+    ];
+
+    function cekKelulusan() {
+      const nik = document.getElementById("nikInput").value.trim();
+      const resultDiv = document.getElementById("result");
+
+      if (!nik) {
+        resultDiv.innerHTML = "<span class='tidak-lolos'>Silakan masukkan NIK Anda terlebih dahulu.</span>";
+        return;
+      }
+
+      if (dataLulus.includes(nik)) {
+        resultDiv.innerHTML = `<span class="lolos">Selamat! Anda dinyatakan LOLOS seleksi.</span>`;
+      } else {
+        resultDiv.innerHTML = `<span class="tidak-lolos">Maaf, Anda TIDAK LOLOS seleksi.</span>`;
+      }
+    }
+  </script>
+</body>
+</html>
