@@ -189,7 +189,13 @@
 </footer>
 
 <script>
-   const dataSiswa=[
+  
+    function cekKelulusan() {
+  
+    const input = document.getElementById("katakucni").value.trim().toLowerCase();
+    const hasil = document.getElementById("hasil");
+    const info = document.getElementById("info-daftar-ulang");
+    const dataSiswa=[
         { nik: "3206301707120004", nama: "Argan Pratama", status: "LULUS", sekolahAsal: "SDN 208 LUGINASARI SUKAGALIH" },
         { nik: "3205402411120001", nama: "Sopian", status: "LULUS", sekolahAsal: "SDN 242 MARGASARI KOTA BANDUNG" },
         { nik: "3205404804130002", nama: "Thania Putri", status: "LULUS", sekolahAsal: "MIS NURUL HUDA" },
@@ -292,11 +298,6 @@
         { nik: "3210123456789002", nama: "Agus Sopian", status: "LULUS", sekolahAsal: "SMPN 2 Cibiuk" }
 
    ];
-    function cekKelulusan() {
-    const input = document.getElementById("katakucni").value.trim().toLowerCase();
-    const hasil = document.getElementById("hasil");
-    const info = document.getElementById("info-daftar-ulang");
-   
     const siswa = dataSiswa.find(item =>
         item.nik === input || item.nama.toLowerCase()===input
      );
@@ -323,6 +324,7 @@
         info.style.display = "block";
         info.innerHTML = `
           <p><strong>Silahkan melakukan daftar ulang ke sekolah pada tanggal <u>7-8 Juli 2025</u>.</strong></p>
+          <p><strong>Jika mendaftar secara kolektif silahkan menghubungi Guru SD masing-masing</strong></p>
           <p><strong>Persyaratan yang harus dipersiapkan:</strong></p>
           <ol>
             <li>Surat Keterangan Berkelakuan Baik</li>
