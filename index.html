@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pengumuman Kelulusan - SMPN 2 Cibiuk</title>
   <style>
     body {
@@ -20,6 +20,7 @@
       color: white;
       text-align: center;
       padding: 2rem 1rem;
+      animation: fadeInTop 1s ease-out;
     }
 
     header h1 {
@@ -44,10 +45,13 @@
       background-color: white;
       padding: 2rem;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       max-width: 400px;
       width: 100%;
       text-align: center;
+      transform: scale(0.95);
+      opacity: 0;
+      animation: zoomIn 0.6s ease-out forwards;
     }
 
     .form-container input {
@@ -57,6 +61,7 @@
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 1rem;
+      transition: 0.3s;
     }
 
     .form-container button {
@@ -67,10 +72,12 @@
       border-radius: 8px;
       font-size: 1rem;
       cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
     }
 
     .form-container button:hover {
       background-color: #003d80;
+      transform: scale(1.05);
     }
 
     .result {
@@ -82,6 +89,9 @@
       gap: 0.5rem;
       padding: 1rem;
       border-radius: 10px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeResult 0.5s ease forwards;
     }
 
     .result.success {
@@ -101,6 +111,44 @@
       color: white;
       text-align: center;
       padding: 1rem;
+      animation: fadeInBottom 1s ease-out;
+    }
+
+    /* Animasi Keyframes */
+    @keyframes zoomIn {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes fadeResult {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInTop {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInBottom {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
@@ -114,7 +162,7 @@
 <main>
   <div class="form-container">
     <label for="nik">Masukkan NIK Siswa:</label>
-    <input type="text" id="nik" placeholder="Contoh: 3210123456789012">
+    <input type="text" id="nik" placeholder="Contoh: 3210123456789012" />
     <button onclick="cekKelulusan()">Cek Kelulusan</button>
 
     <div id="hasil" class="result"></div>
@@ -138,6 +186,8 @@
     if (dataSiswa[nik]) {
       const siswa = dataSiswa[nik];
       hasil.style.display = "flex";
+      hasil.classList.remove("success", "failed");
+      hasil.offsetHeight; // force reflow to re-trigger animation
       if (siswa.status === "LULUS") {
         hasil.className = "result success";
         hasil.innerHTML = `✅ ${siswa.nama} dinyatakan <strong>LULUS</strong>`;
