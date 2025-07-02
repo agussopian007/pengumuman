@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pengumuman Kelulusan - SMPN 2 Cibiuk</title>
+  <title>Pengumuman Kelulusan Seleksi - SMPN 2 Cibiuk</title>
   <style>
     body {
       margin: 0;
@@ -26,11 +26,12 @@
     header h3 {
       margin: 0;
       padding:0;
+      font-size: 1.5rem;
     }
 
     header p {
-      margin: 0.5rem 0 0;
-      font-size: 1.2rem;
+      margin: 0.1rem 0 0;
+      font-size: 1rem;
     }
 
     main {
@@ -42,23 +43,40 @@
     }
 
     .form-container {
+    
       background-color: white;
       padding: 2rem;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       max-width: 500px;
-      width: 100%;
+      width: 80%;
       text-align: center;
       animation: zoomIn 0.6s ease-out forwards;
     }
 
     .form-container input {
-      width: 100%;
+      width: 80%;
       padding: 0.75rem;
       margin-bottom: 1rem;
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 1rem;
+    }
+    #cekBtn {
+    background: linear-gradient(to right, #007bff, #6f42c1); /* Biru ke ungu */
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    #cekBtn:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
     }
 
     .form-container button {
@@ -84,7 +102,6 @@
       padding: 1rem;
       border-radius: 10px;
     }
-
     .result.success {
       color: #0a662e;
       background-color: #d1f7e1;
@@ -107,6 +124,23 @@
       text-align: left;
       font-size: 0.95rem;
     }
+    .kontak-info {
+    text-align: center;
+    margin-top:10px;
+    font-size: 1rem;
+    color: #333;
+    line-height: 0.4;
+    }
+
+    .kontak-info a {
+    color: #0077cc;
+    text-decoration: none;
+    }
+
+    .kontak-info a:hover {
+    text-decoration: underline;
+    }
+
 
     footer {
       background-color: #004080;
@@ -120,6 +154,8 @@
       to { opacity: 1; transform: translateY(0); }
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
 </head>
 <body>
 
@@ -130,14 +166,22 @@
 </header>
 
 <main>
-  <div class="form-container">
-    <label for="nik">Masukkan NIK Siswa:</label>
-    <input type="text" id="nik" placeholder="Contoh: 3210123456789012" />
-    <button onclick="cekKelulusan()">Cek Kelulusan</button>
+    <div class="form-container">
+    <label for="nik" style="display:block; margin-bottom: 0.5rem;">Cari berdasarkan NIK atau Nama</label>
+    <input type="text" id="katakucni" placeholder="Contoh: 3210123456789012" />
+    <button id="cekBtn" onclick="cekKelulusan()">Cek Kelulusan</button>
 
-    <div id="hasil" class="result"></div>
+    <div id="hasil" class="result">
+      
+    </div>
     <div id="info-daftar-ulang"></div>
+    
   </div>
+  <div class="kontak-info">
+  <p>Informasi lebih lanjut bisa menghubungi:</p>
+  <p><strong>Lilis Siti Hajar, S.Pd, M.M</strong></p><p>Whatsapp: <a href="https://wa.me/6285310496180" target="_blank">0853-1049-6180</a></p>
+</div>
+
 </main>
 
 <footer>
@@ -146,34 +190,36 @@
 
 <script>
   function cekKelulusan() {
-    const nik = document.getElementById("nik").value.trim();
+    const input = document.getElementById("katakucni").value.trim().toLowerCase();
     const hasil = document.getElementById("hasil");
     const info = document.getElementById("info-daftar-ulang");
 
-    const dataSiswa = {
-      "3210123456789012": { nama: "Ahmad Ridho", status: "LULUS",sekolah: "SMP Negeri 2 Cibiuk"},
-      "3210987654321098": { nama: "Siti Aisyah", status: "TIDAK LULUS",sekolah: "SMP Negeri 2 Cibiuk" }
-    };
+    const dataSiswa = [
+        { nik: "3210012345678901", nama: "Aisyah Nurul", status: "LULUS", sekolahAsal: "SMPN 2 Cibiuk" },
+        { nik: "3210012345678902", nama: "Budi Santoso", status: "TIDAK LULUS", sekolahAsal: "SMPN 2 Cibiuk" }
+    ];
 
+    const siswa = dataSiswa.find(item =>
+        item.nik === input || item.nama.toLowerCase()===input
+     );
 
-    if (dataSiswa[nik]) {
-      const siswa = dataSiswa[nik];
+    if (siswa) {
+    //   const siswa = dataSiswa[nik];
       hasil.style.display = "block";
       hasil.classList.remove("success", "failed");
       info.style.display = "none";
 
       if (siswa.status === "LULUS") {
         hasil.classList.add("success");
-     hasil.innerHTML = `
-  ✅ <strong>Selamat!</strong><br />
-  <div style="margin: 0.3rem 0 0.2rem; font-size: 1.5rem;">${siswa.nama}</div>
-  <div style="margin-top: 0.4rem; font-size: 0.95rem;">
-    Sekolah asal: <strong>${siswa.sekolah}</strong>
-  </div>
-  <div style="margin: 0; font-size: 1rem;">Kamu dinyatakan <strong>Lolos Seleksi</strong>.</div>
-  
-`;
-
+        hasil.innerHTML = `<strong>Selamat!</strong><br />
+                <div style="margin: 0.3rem 0 0.2rem; font-size: 1.5rem;line-height:0.9">${siswa.nama}</div>
+                <div style="margin-top: 0.4rem; font-size: 1rem;">
+                    <strong>${siswa.sekolahAsal}</strong>
+                </div>
+                <div style="margin: 0; font-size: 1rem;">Kamu dinyatakan <strong>Lolos Seleksi</strong>.</div>
+                
+                `;
+        semburkanKonfeti();
 
 
         info.style.display = "block";
@@ -190,23 +236,55 @@
             <li>Foto Copy Kartu NISN</li>
             <li>Foto Copy Kartu KPS/KKS/PKH/KIP jika penerima bantuan</li>
           </ol>
-          <p><strong>Informasi lebih lanjut bisa menghubungi:</strong></p>
-          <ul>
-            <li>Lilis Siti Hajar, S.Pd, M.M - Whatsapp: 0853-1049-6180</li>
-          </ul>
+          
         `;
       } else {
         hasil.classList.add("failed");
-        hasil.innerHTML = `❌ ${siswa.nama} dinyatakan <strong>TIDAK LULUS</strong>. Tetap semangat dan terus berusaha! 💪`;
+        hasil.innerHTML = `❌ ${siswa.nama} dinyatakan <strong>TIDAK LULUS</strong>. </br>Tetap semangat dan terus berusaha! 💪`;
       }
     } else {
       hasil.style.display = "block";
       hasil.className = "result failed";
-      hasil.innerHTML = `❌ Data tidak ditemukan. Periksa kembali NIK yang dimasukkan.`;
+      hasil.innerHTML = `❌ Data tidak ditemukan. Periksa kembali NIK atau Nama yang dimasukkan.`;
+      
       info.style.display = "none";
+
     }
   }
 </script>
 
 </body>
 </html>
+<script>
+  // Fungsi menyemburkan konfeti ke seluruh halaman
+  function semburkanKonfeti() {
+    var duration = 3 * 1000;
+    var animationEnd = Date.now() + duration;
+    var defaults = { startVelocity: 45, spread: 360, ticks: 90, zIndex: 999,  scalar: 1.6  };
+
+    function randomInRange(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    var interval = setInterval(function () {
+      var timeLeft = animationEnd - Date.now();
+
+      if (timeLeft <= 0) {
+        return clearInterval(interval);
+      }
+
+      var particleCount = 100 * (timeLeft / duration);
+      // menyembur dari kiri dan kanan
+      confetti(Object.assign({}, defaults, {
+        particleCount,
+        origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
+      }));
+      confetti(Object.assign({}, defaults, {
+        particleCount,
+        origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
+      }));
+    }, 250);
+  }
+
+  
+</script>
