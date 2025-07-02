@@ -16,7 +16,7 @@
     }
 
     header {
-      background-color: #004080;
+      background: linear-gradient(to right, #004080, #6a0dad);
       color: white;
       text-align: center;
       padding: 2rem 1rem;
@@ -107,9 +107,8 @@
 <body>
 
 <header>
-  <h1>Sistem Penerimaan Murid Baur</h1>
-  <h1>SMP NEGERI 2 CIBIUK</h1>
-<p>Tahun Pelajaran 2025/2026</p>
+  <h1>Pengumuman Kelulusan</h1>
+  <p>SMP Negeri 2 Cibiuk Tahun Pelajaran 2025/2026</p>
 </header>
 
 <main>
@@ -131,7 +130,6 @@
     const nik = document.getElementById("nik").value.trim();
     const hasil = document.getElementById("hasil");
 
-    // Simulasi data kelulusan
     const dataSiswa = {
       "3210123456789012": { nama: "Ahmad Ridho", status: "LULUS" },
       "3210987654321098": { nama: "Siti Aisyah", status: "TIDAK LULUS" }
