@@ -190,10 +190,10 @@
       hasil.offsetHeight; // force reflow to re-trigger animation
       if (siswa.status === "LULUS") {
         hasil.className = "result success";
-        hasil.innerHTML = `✅ ${siswa.nama} dinyatakan <strong>LULUS</strong>`;
+        hasil.innerHTML = `Selamat! <br> ✅ ${siswa.nama} dinyatakan <strong>LULUS</strong>`;
       } else {
         hasil.className = "result failed";
-        hasil.innerHTML = `❌ ${siswa.nama} dinyatakan <strong>TIDAK LULUS</strong>`;
+        hasil.innerHTML = `Mohon Maaf! <br> ❌ ${siswa.nama} dinyatakan <strong>TIDAK LULUS</strong>`;
       }
     } else {
       hasil.style.display = "flex";
