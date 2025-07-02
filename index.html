@@ -46,11 +46,9 @@
       padding: 2rem;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      max-width: 400px;
+      max-width: 500px;
       width: 100%;
       text-align: center;
-      transform: scale(0.95);
-      opacity: 0;
       animation: zoomIn 0.6s ease-out forwards;
     }
 
@@ -61,7 +59,6 @@
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 1rem;
-      transition: 0.3s;
     }
 
     .form-container button {
@@ -72,12 +69,11 @@
       border-radius: 8px;
       font-size: 1rem;
       cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      transition: background-color 0.3s ease;
     }
 
     .form-container button:hover {
       background-color: #003d80;
-      transform: scale(1.05);
     }
 
     .result {
@@ -85,13 +81,8 @@
       font-size: 1.2rem;
       font-weight: bold;
       display: none;
-      align-items: center;
-      gap: 0.5rem;
       padding: 1rem;
       border-radius: 10px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeResult 0.5s ease forwards;
     }
 
     .result.success {
@@ -106,49 +97,27 @@
       border: 1px solid #cc0000;
     }
 
+    #info-daftar-ulang {
+      margin-top: 2rem;
+      background-color: #eef6ff;
+      border-left: 6px solid #004080;
+      padding: 1rem;
+      border-radius: 10px;
+      display: none;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
     footer {
       background-color: #004080;
       color: white;
       text-align: center;
       padding: 1rem;
-      animation: fadeInBottom 1s ease-out;
-    }
-
-    /* Animasi Keyframes */
-    @keyframes zoomIn {
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    @keyframes fadeResult {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     @keyframes fadeInTop {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes fadeInBottom {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -166,6 +135,7 @@
     <button onclick="cekKelulusan()">Cek Kelulusan</button>
 
     <div id="hasil" class="result"></div>
+    <div id="info-daftar-ulang"></div>
   </div>
 </main>
 
@@ -177,6 +147,7 @@
   function cekKelulusan() {
     const nik = document.getElementById("nik").value.trim();
     const hasil = document.getElementById("hasil");
+    const info = document.getElementById("info-daftar-ulang");
 
     const dataSiswa = {
       "3210123456789012": { nama: "Ahmad Ridho", status: "LULUS" },
@@ -185,20 +156,42 @@
 
     if (dataSiswa[nik]) {
       const siswa = dataSiswa[nik];
-      hasil.style.display = "flex";
+      hasil.style.display = "block";
       hasil.classList.remove("success", "failed");
-      hasil.offsetHeight; // force reflow to re-trigger animation
+      info.style.display = "none";
+
       if (siswa.status === "LULUS") {
-        hasil.className = "result success";
-        hasil.innerHTML = `Selamat!<p>✅ ${siswa.nama} </p></p> <strong>LULUS</strong></p>`;
+        hasil.classList.add("success");
+        hasil.innerHTML = `✅ Selamat ${siswa.nama}! Kamu dinyatakan <strong>LULUS</strong>. Kami bangga padamu! 🎉`;
+
+        info.style.display = "block";
+        info.innerHTML = `
+          <p><strong>Silahkan melakukan daftar ulang ke sekolah pada tanggal <u>7-8 Juli 2025</u>.</strong></p>
+          <p><strong>Persyaratan yang harus dipersiapkan:</strong></p>
+          <ol>
+            <li>Surat Keterangan Berkelakuan Baik</li>
+            <li>Foto Copy Kelulusan</li>
+            <li>Foto Copy Akta Kelahiran / Komsen</li>
+            <li>Foto Copy Ijazah (jika sudah ada)</li>
+            <li>Foto Copy Kartu Keluarga</li>
+            <li>Foto Copy KTP Orang Tua</li>
+            <li>Foto Copy Kartu NISN</li>
+            <li>Foto Copy Kartu KPS/KKS/PKH/KIP jika penerima bantuan</li>
+          </ol>
+          <p><strong>Informasi lebih lanjut bisa menghubungi:</strong></p>
+          <ul>
+            <li>Lilis Siti Hajar, S.Pd, M.M - Whatsapp: 0853-1049-6180</li>
+          </ul>
+        `;
       } else {
-        hasil.className = "result failed";
-        hasil.innerHTML = `Mohon Maaf! <br> ❌ ${siswa.nama} dinyatakan <strong>TIDAK LULUS</strong>`;
+        hasil.classList.add("failed");
+        hasil.innerHTML = `❌ ${siswa.nama} dinyatakan <strong>TIDAK LULUS</strong>. Tetap semangat dan terus berusaha! 💪`;
       }
     } else {
-      hasil.style.display = "flex";
+      hasil.style.display = "block";
       hasil.className = "result failed";
       hasil.innerHTML = `❌ Data tidak ditemukan. Periksa kembali NIK yang dimasukkan.`;
+      info.style.display = "none";
     }
   }
 </script>
