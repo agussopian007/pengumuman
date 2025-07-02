@@ -151,9 +151,10 @@
     const info = document.getElementById("info-daftar-ulang");
 
     const dataSiswa = {
-      "3210123456789012": { nama: "Ahmad Ridho", status: "LULUS" },
-      "3210987654321098": { nama: "Siti Aisyah", status: "TIDAK LULUS" }
+      "3210123456789012": { nama: "Ahmad Ridho", status: "LULUS",sekolah: "SMP Negeri 2 Cibiuk"},
+      "3210987654321098": { nama: "Siti Aisyah", status: "TIDAK LULUS",sekolah: "SMP Negeri 2 Cibiuk" }
     };
+
 
     if (dataSiswa[nik]) {
       const siswa = dataSiswa[nik];
@@ -163,11 +164,15 @@
 
       if (siswa.status === "LULUS") {
         hasil.classList.add("success");
-      hasil.innerHTML = `
+     hasil.innerHTML = `
   ✅ <strong>Selamat!</strong><br />
   <div style="margin: 0.3rem 0 0.2rem; font-size: 1.2rem;">${siswa.nama}</div>
   <div style="margin: 0; font-size: 1rem;">Kamu <strong>Lolos seleksi</strong>.</div>
+  <div style="margin-top: 0.4rem; font-size: 0.95rem; color: #444;">
+    Sekolah asal: <strong>${siswa.sekolah}</strong>
+  </div>
 `;
+
 
 
         info.style.display = "block";
